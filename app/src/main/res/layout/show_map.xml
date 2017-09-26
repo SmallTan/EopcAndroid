@@ -44,25 +44,28 @@
             android:background="#484E61"
             >
             <Button
-                android:id="@+id/user"
+                android:id="@+id/chat_room"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:background="@drawable/icon_talk_cheng"
                 />
             <Button
                 android:id="@+id/scan_qr_code"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
+                android:background="@drawable/icon_scanner_green"
                 />
             <Button
-                android:id="@+id/share"
+                android:id="@+id/go_space"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
+                android:background="@drawable/icon_space_blue"
                 />
         </RelativeLayout>
     </LinearLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    <ImageView
+    <app.ifox.com.eopcandroid.customView.RoundImageView
         android:id="@+id/user_header"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -21,7 +21,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:text="这是一个header"
         android:textColor="#cf0e08"
-        android:textSize="20dp"
+        android:textSize="20sp"
         />
 
 </LinearLayout>
