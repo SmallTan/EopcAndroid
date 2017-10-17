@@ -1,8 +1,6 @@
 package app.ifox.com.eopcandroid.activity;
 
-import android.content.ClipData;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,7 +23,7 @@ import app.ifox.com.eopcandroid.R;
 import app.ifox.com.eopcandroid.util.MapUtil;
 
 
-public class MapActivity extends AppCompatActivity implements View.OnClickListener {
+public class MapActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private static final int REQUEST_CODE = 1;
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
@@ -84,53 +82,6 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         chatRoom.setOnClickListener(this);
         mScannr.setOnClickListener(this);
         mSpace.setOnClickListener(this);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.map_drawerlayout);
-        mNavigation = (NavigationView) findViewById(R.id.mainactionbar);
-//        View headerView = mNavigation.getHeaderView(0);
-//        Menu userMessageView = mNavigation.getMenu();
-       /*
-        if (mNavigation != null){
-            mNavigation.setNavigationItemSelectedListener(
-                    new NavigationView.OnNavigationItemSelectedListener(){
-                        @Override
-                        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                            menuItem.setChecked(true);
-                            switch (menuItem.getItemId()){
-                                case R.id.item_user:
-                                    Intent mapIntentToUserMessageActivity = new Intent(MapActivity.this,UserMessageActivity.class);
-                                    startActivity(mapIntentToUserMessageActivity);
-                                    break;
-                                case R.id.item_friends:
-                                    Toast.makeText(MapActivity.this,"朋友",Toast.LENGTH_SHORT).show();
-                                    break;
-                                case R.id.item_feedback:
-                                    Toast.makeText(MapActivity.this,"反馈",Toast.LENGTH_SHORT).show();
-                                    break;
-                                case R.id.item_notice:
-                                    Toast.makeText(MapActivity.this,"通知",Toast.LENGTH_SHORT).show();
-                                    break;
-                                case R.id.item_setup:
-                                    Toast.makeText(MapActivity.this,"设置",Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                            return true;
-                        }
-                    });
-        }
-        */
-
-//        itemUser = userMessageView.findItem(R.id.item_user);
-//        itemFriends = userMessageView.findItem(R.id.item_friends);
-//        itemFeedback = userMessageView.findItem(R.id.item_feedback);
-//        itemNotice = userMessageView.findItem(R.id.item_notice);
-//        itemSetup = userMessageView.findItem(R.id.item_setup);
-//        itemUser.setOnMenuItemClickListener(this);
-//        itemFriends.setOnMenuItemClickListener(this);
-//        itemFeedback.setOnMenuItemClickListener(this);
-//        itemNotice.setOnMenuItemClickListener(this);
-//        itemSetup.setOnMenuItemClickListener(this);
-
         mToolbar.setTitle("园码时代");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -138,6 +89,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 R.string.drawer_close);
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+        mNavigation = (NavigationView)findViewById(R.id.nv_user);
+        mNavigation.setNavigationItemSelectedListener(this);
         }
 
     @Override
@@ -152,6 +106,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         switch (v.getId()){
             case R.id.chat_room:
                 Toast.makeText(MapActivity.this,"聊天室",Toast.LENGTH_SHORT).show();
+                Intent mapIntentChatRoom = new Intent(MapActivity.this,ChatRoomActivity.class);
+                startActivity(mapIntentChatRoom);
+
                 break;
             case R.id.scan_qr_code:
                 Intent mapIntentToCapActivity = new Intent(MapActivity.this, CaptureActivity.class);
@@ -167,18 +124,47 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        int id = item.getItemId();
+        if (id == R.id.item_user) {
+            Toast.makeText(getApplicationContext(), "我", Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.item_friends){
+
+        }else if (id == R.id.item_feedback){
+
+        }else if (id == R.id.item_notice){
+
+        }else if (id == R.id.item_setup){
 
         }
-
-        return super.onOptionsItemSelected(item);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.map_drawerlayout);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        if (id == R.id.item_user) {
+            Intent intent = new Intent(MapActivity.this,UserMessageActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getApplicationContext(), "我", Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.item_friends){
 
+        }else if (id == R.id.item_feedback){
+
+        }else if (id == R.id.item_notice){
+
+        }else if (id == R.id.item_setup){
+
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.map_drawerlayout);
+
+        return true;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE) {
@@ -198,27 +184,5 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-//    @Override
-//    public boolean onMenuItemClick(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.item_user:
-//                Intent mapIntentToUserMessageActivity = new Intent(MapActivity.this,UserMessageActivity.class);
-//                startActivity(mapIntentToUserMessageActivity);
-//                return true;
-//
-//            case R.id.item_friends:
-//                Toast.makeText(MapActivity.this,"朋友",Toast.LENGTH_SHORT).show();
-//                return true;
-//            case R.id.item_feedback:
-//                Toast.makeText(MapActivity.this,"反馈",Toast.LENGTH_SHORT).show();
-//                return true;
-//            case R.id.item_notice:
-//                Toast.makeText(MapActivity.this,"通知",Toast.LENGTH_SHORT).show();
-//                return true;
-//            case R.id.item_setup:
-//                Toast.makeText(MapActivity.this,"设置",Toast.LENGTH_SHORT).show();
-//                return true;
-//        }
-//        return true;
-//    }
+
 }

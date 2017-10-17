@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    android:background="@drawable/background_xinghuo_icon"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
     <app.ifox.com.eopcandroid.customView.RoundImageView
         android:id="@+id/user_header"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/logo"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="50dp"
+        android:layout_gravity="center"
+
+        />
+    <TextView
+        android:id="@+id/nv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="名字"
+        android:textSize="20sp"
+        android:textColor="#e1560c"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:text="个性签名"
+        android:textColor="#c05d17"
+        android:textSize="17sp"
 
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:text="这是一个header"
-        android:textColor="#cf0e08"
-        android:textSize="20sp"
         />
 
 </LinearLayout>

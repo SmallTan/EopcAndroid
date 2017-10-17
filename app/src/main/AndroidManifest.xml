@@ -46,6 +46,8 @@
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.UserMessageActivity"/>
         <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".util.PermissionsActivity"/>
+        <activity android:name=".activity.ChatRoomActivity"/>
     </application>
 
 </manifest>
