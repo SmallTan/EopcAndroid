@@ -125,7 +125,7 @@ public class MapUtil implements LocationSource, AMapLocationListener {
                 Log.e("AmapError", "location Error, ErrCode:"
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
-                Toast.makeText(context.getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
+//                Toast.makeText(context.getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
             }
         }
     }

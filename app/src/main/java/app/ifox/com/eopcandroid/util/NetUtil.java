@@ -2,6 +2,7 @@ package app.ifox.com.eopcandroid.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -38,6 +39,7 @@ public class NetUtil {
             conn.setUseCaches(false);
             if(info!=null) {
                 out = conn.getOutputStream();
+                Log.d("aaaa","conn:" + request + info);
                 byte[] bytes = new String(request + info).getBytes(encode);
                 out.write(bytes);
                 out.flush();

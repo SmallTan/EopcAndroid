@@ -3,11 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e7e7e7"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#FF6E00"
+        android:background="#aeaeae"
         >
         <Button
             android:id="@+id/back_login"
@@ -27,30 +28,30 @@
             android:layout_marginLeft="50dp"
             />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/user_name1"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:layout_marginLeft="10dp">-->
+        <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:src="@drawable/user_name1"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="10dp"-->
 
-            android:layout_marginLeft="10dp"
-            />
-        <EditText
-            android:id="@+id/user_name"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="40dp"
-            android:hint="用户名"
+            <!--android:layout_marginLeft="10dp"-->
+            <!--/>-->
+        <!--<EditText-->
+            <!--android:id="@+id/user_name"-->
+            <!--android:layout_width="320dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:hint="用户名"-->
 
-            />
-    </RelativeLayout>
+            <!--/>-->
+    <!--</RelativeLayout>-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -71,61 +72,61 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="40dp"
             android:inputType="textEmailAddress"
+            android:maxLength="20"
+            android:maxLines="1"
             android:hint="邮箱"
-
             />
+
     </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_marginTop="150dp"-->
+        <!--android:layout_marginLeft="10dp">-->
+        <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:src="@drawable/school"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--/>-->
+        <!--<EditText-->
+            <!--android:id="@+id/school"-->
+            <!--android:layout_width="320dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:hint="学校"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_marginTop="200dp"-->
+        <!--android:layout_marginLeft="10dp">-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:src="@drawable/number"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--/>-->
+        <!--<EditText-->
+            <!--android:id="@+id/number"-->
+            <!--android:layout_width="320dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:hint="学号"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="150dp"
-        android:layout_marginLeft="10dp">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/school"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            />
-        <EditText
-            android:id="@+id/school"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="40dp"
-            android:inputType="textEmailAddress"
-            android:hint="学校"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="10dp">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/number"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            />
-        <EditText
-            android:id="@+id/number"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="40dp"
-            android:inputType="textEmailAddress"
-            android:hint="学号"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="250dp"
         android:layout_marginLeft="10dp">
 
         <ImageView
@@ -134,9 +135,10 @@
             android:src="@drawable/password"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
-
             android:layout_marginLeft="10dp"
             />
+
+
         <EditText
             android:id="@+id/register_password"
             android:layout_width="320dp"
@@ -150,7 +152,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="200dp"
         android:layout_marginLeft="10dp">
 
         <ImageView
@@ -170,6 +172,30 @@
             android:layout_marginLeft="40dp"
             android:hint="确认密码"
             android:inputType="textPassword"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="10dp">
+        <EditText
+            android:id="@+id/verification_code"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="40dp"
+            />
+        <Button
+            android:id="@+id/send_verification_code"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="发送验证"
+            android:background="@color/send_verification"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
             />
     </RelativeLayout>
     <RelativeLayout

@@ -3,4 +3,6 @@
     <string name= "name">园码时代</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
+    <string name="personal_information_introduce">未设置</string>
+    <string name="my_love">我如果爱你，绝不像攀缘的凌霄花，借你的高枝炫耀自己</string>
 </resources>

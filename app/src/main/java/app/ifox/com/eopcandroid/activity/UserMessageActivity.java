@@ -1,16 +1,20 @@
 package app.ifox.com.eopcandroid.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,9 +26,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import app.ifox.com.eopcandroid.R;
 import app.ifox.com.eopcandroid.customView.RoundImageView;
+import app.ifox.com.eopcandroid.util.NetUtil;
 import app.ifox.com.eopcandroid.util.PermissionsActivity;
 import app.ifox.com.eopcandroid.util.PermissionsChecker;
 import app.ifox.com.eopcandroid.util.TakePhoto;
@@ -35,153 +41,143 @@ import app.ifox.com.eopcandroid.util.TakePhoto;
  */
 
 public class UserMessageActivity extends Activity implements View.OnClickListener {
-    LinearLayout myscrollLinearlayout;
-    LinearLayout mainheadview; //顶部个人资料视图
-    RelativeLayout mainactionbar; //顶部菜单栏
-    ImageButton userMessageIntentMap;
-    RoundImageView userMesaageHeader;
-    TakePhoto takePhoto = new TakePhoto(this,UserMessageActivity.this,userMesaageHeader);
 
+    private RelativeLayout information_relative_username;//设置名字
+    private RelativeLayout information_relative_user_email;//设置邮箱
+    private RelativeLayout information_relative_user_school;//设置学校
+    private RelativeLayout information_relative_user_introduce;//设置简介
+    private RelativeLayout information_back;//返回
+    private TextView information_user_name;//显示的名字
+    private TextView information_user_email;//显示邮箱
+    private RoundImageView information_user_headimage;//显示的头像
+    private TextView information_user_setup_name;//设置的名字
+    private TextView information_user_setup_email;//设置的邮箱
+    private TextView information_user_setup_school;//设置学校
+    private TextView information_user_setup_introduce;//设置个人简介
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor perEditor;
+    private Integer userId;//用户的唯一id
+    private String resultName,resultAvatar,resultSchool,resultResume;
+    private String getDialogName,getDialogSchool,getDialogResume;
+    NetUtil netUtil;
+    Message msg ;
     private PermissionsChecker mPermissionsChecker = new PermissionsChecker(UserMessageActivity.this);; // 权限检测器
     static final String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA};
+    TakePhoto takePhoto = new TakePhoto(this,UserMessageActivity.this,information_user_headimage);
 
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0://修改名字
+                    if (resultName == null) {
+                        Toast.makeText(UserMessageActivity.this, "修改失败，请检查网络或者联系管理员", Toast.LENGTH_SHORT).show();
+                    }else {
+                        information_user_name.setText(getDialogName);
+                        information_user_setup_name.setText(getDialogName);
+                        perEditor.putString("name",getDialogName);
+                        perEditor.commit();
+                    }
+                    break;
+                case 1:
+                    if (resultSchool == null) {
+                        Toast.makeText(UserMessageActivity.this, "修改失败，请检查网络或者联系管理员", Toast.LENGTH_SHORT).show();
+                    }else {
+                        information_user_setup_school.setText(getDialogSchool);
+                        perEditor.putString("school",getDialogSchool);
+                        perEditor.commit();
+                    }
+                    break;
+                case 2:
+                    if (resultResume == null) {
+                        Toast.makeText(UserMessageActivity.this, "修改失败，请检查网络或者联系管理员", Toast.LENGTH_SHORT).show();
+                    }else {
+                        information_user_setup_introduce.setText(getDialogResume);
+                        perEditor.putString("introduce",getDialogResume);
+                        perEditor.commit();
+                    }
+            }
+        }
+    };
+    public UserMessageActivity() {
+    }
 
-    int Y;
-    int position = 0; //拖动Linearlayout的距离Y轴的距离
-    int scrollviewdistancetotop = 0; //headView的高
-    int menubarHeight = 0;
-    int chufaHeight = 0; //需要触发动画的高
-    float scale; //像素密度
-    int headViewPosition = 0;
-    ImageView userinfo_topbar;
-    static boolean flag = true;
-    static boolean topmenuflag = true;
-
-    private TextView nikeName;
-    private TextView email;
-    private TextView school;
-    private TextView number;
-    private TextView personalizedSignature;
-    private TextView makeOnecel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.personal_interface);
-        initView();         //实现界面的可滚动性
-        initListener();
+        setContentView(R.layout.personal_information);
+        init();
     }
 
-    private void initListener() {
-        userMessageIntentMap = (ImageButton) findViewById(R.id.userinfo_returnbtn);
-        userMesaageHeader = (RoundImageView) findViewById(R.id.user_message_header);
-        nikeName = (TextView) findViewById(R.id.nikename_user_message);
-        email = (TextView) findViewById(R.id.e_mail_user_message);
-        school = (TextView) findViewById(R.id.school_user_message);
-        number = (TextView) findViewById(R.id.number_user_message);
-        personalizedSignature = (TextView) findViewById(R.id.personalized_signature_user_message);
-        makeOnecel = (TextView) findViewById(R.id.make_onecel_user_message);
-
-        userMessageIntentMap.setOnClickListener(this);
-        userMesaageHeader.setOnClickListener(this);
-        nikeName.setOnClickListener(this);
-        email.setOnClickListener(this);
-        school.setOnClickListener(this);
-        number.setOnClickListener(this);
-        personalizedSignature.setOnClickListener(this);
-        makeOnecel.setOnClickListener(this);
+    private void init() {
+        information_back = (RelativeLayout) findViewById(R.id.information_back);
+        information_relative_username = (RelativeLayout) findViewById(R.id.information_relative_username);
+        information_relative_user_email = (RelativeLayout) findViewById(R.id.information_relative_user_email);
+        information_relative_user_school = (RelativeLayout) findViewById(R.id.information_relative_user_school);
+        information_relative_user_introduce = (RelativeLayout) findViewById(R.id.information_relative_user_introduce);
+        information_user_name = (TextView) findViewById(R.id.information_user_name);
+        information_user_email = (TextView) findViewById(R.id.information_user_email);
+        information_user_headimage = (RoundImageView) findViewById(R.id.information_user_headimage);
+        information_user_setup_name = (TextView) findViewById(R.id.information_user_setup_name);
+        information_user_setup_email = (TextView) findViewById(R.id.information_user_setup_email);
+        information_user_setup_school = (TextView) findViewById(R.id.information_user_setup_school);
+        information_user_setup_introduce = (TextView) findViewById(R.id.information_user_setup_introduce);
+        sharedPreferences = getSharedPreferences("per_information",MODE_PRIVATE);
+        perEditor = sharedPreferences.edit();
+        userId = sharedPreferences.getInt("userId",0);
+        netUtil = new NetUtil();
+        msg = new Message();
+        initMessage();
+        information_back.setOnClickListener(this);
+        information_relative_username.setOnClickListener(this);
+        information_relative_user_email.setOnClickListener(this);
+        information_relative_user_school.setOnClickListener(this);
+        information_relative_user_introduce.setOnClickListener(this);
+        information_user_headimage.setOnClickListener(this);
 
     }
 
-    private void initView() {
-        userinfo_topbar = (ImageView) findViewById(R.id.userinfo_topbar);
-        //获得像素密度
-        scale = this.getResources().getDisplayMetrics().density;
-        mainheadview = (LinearLayout) findViewById(R.id.mainheadview);
-        mainactionbar = (RelativeLayout) findViewById(R.id.mainactionbar);
-        menubarHeight = (int) (55 * scale);
-        chufaHeight = (int) (110 * scale);
-        scrollviewdistancetotop = (int) ((260 )*scale);
-        position = scrollviewdistancetotop;
-        myscrollLinearlayout = (LinearLayout) findViewById(R.id.myscrollLinearlayout);
-        myscrollLinearlayout.setY( scrollviewdistancetotop); //要减去Absolote布局距离顶部的高度
-        myscrollLinearlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        //这里设置滑动效果
-        myscrollLinearlayout.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        //按下的Y的位置
-                        Y = (int) event.getRawY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        int nowY = (int) myscrollLinearlayout.getY(); //拖动界面的Y轴位置
-                        int tempY = (int) (event.getRawY() - Y); //手移动的偏移量
-                        Y = (int) event.getRawY();
-                        if ((nowY + tempY >= 0) && (nowY + tempY <= scrollviewdistancetotop)) {
-                            if ((nowY + tempY <= menubarHeight)&& (topmenuflag == true) ){
-                                userinfo_topbar.setVisibility(View.VISIBLE);
-                                topmenuflag = false;
-                            } else if ((nowY + tempY > menubarHeight) && (topmenuflag == flag)) {
-                                userinfo_topbar.setVisibility(View.INVISIBLE);
-                                topmenuflag = true;
-                            }
-                            int temp = position += tempY;
-                            myscrollLinearlayout.setY(temp);
-                            int headviewtemp = headViewPosition += (tempY/5);
-                            mainheadview.setY(headviewtemp);
-                        }
-                        //顶部的动画效果
-                        if ((myscrollLinearlayout.getY() <= chufaHeight) && (flag == true)) {
-                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainheadview, "alpha", 1, 0.0f);
-                            anim.setDuration(500);
-                            anim.start();
-                            flag = false;
-                        } else if ((myscrollLinearlayout.getY() > chufaHeight + 40) && (flag == false)) {
-                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainheadview, "alpha", 0.0f, 1f);
-                            anim.setDuration(500);
-                            anim.start();
-                            flag = true;
-                        }
-                        break;
-                }
-                return false;
-            }
-        });
+    private void initMessage() {
+        information_user_name.setText(sharedPreferences.getString("userName",""));
+        information_user_setup_name.setText(sharedPreferences.getString("userName",""));
+        information_user_setup_email.setText(sharedPreferences.getString("email",""));
+        information_user_setup_school.setText(sharedPreferences.getString("school",""));
+        information_user_setup_introduce.setText(sharedPreferences.getString("introduce",""));
+        information_user_email.setText(sharedPreferences.getString("email",""));
     }
-
 
     @Override
     public void onClick(View v) {
         View dialogView = View.inflate(UserMessageActivity.this,R.layout.user_message_input_dialog,null);
-         EditText dialogEditText = (EditText) dialogView.findViewById(R.id.edittext_dialog);
-         TextView dialogTextView = (TextView) dialogView.findViewById(R.id.header_dialog);
+        EditText dialogEditText = (EditText) dialogView.findViewById(R.id.edittext_dialog);
+        TextView dialogTextView = (TextView) dialogView.findViewById(R.id.header_dialog);
         switch (v.getId()){
-            case R.id.userinfo_returnbtn:
-                Intent intent = new Intent(UserMessageActivity.this,MapActivity.class);
-                startActivity(intent);
+            case R.id.information_back_button:
+            case R.id.information_back_text:
+            case R.id.information_back:
+                Intent intentInformation = new Intent(UserMessageActivity.this,MapActivity.class);
+                startActivity(intentInformation);
                 finish();
                 break;
-            case R.id.user_message_header:
+            case R.id.information_user_headimage:
                 popupChose();
                 break;
-            case R.id.nikename_user_message:
+            case R.id.information_relative_username:
                 AlertDialog.Builder nikenameBuilder = new AlertDialog.Builder(UserMessageActivity.this);
                 nikenameBuilder.setView(dialogView);
+                dialogTextView.setText("昵称");
                 nikenameBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
-                     public void onClick(DialogInterface dialog,int id){
-                         String text = dialogEditText.getText().toString().trim();
-                         nikeName.setText(text);
-                         dialogTextView.setText("昵称");
-                         dialog.dismiss();
-                }
-            });
+                    public void onClick(DialogInterface dialog,int id){
+                        getDialogName = dialogEditText.getText().toString().trim();
+                        if (!getDialogName.equals("")) {
+                            changeUserName(getDialogName);
+                        }
+                        dialog.dismiss();
+                    }
+                });
                 nikenameBuilder .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -190,103 +186,105 @@ public class UserMessageActivity extends Activity implements View.OnClickListene
                 });
                 AlertDialog dialogNikemane = nikenameBuilder.create();
                 dialogNikemane.show();
-
                 break;
-            case R.id.e_mail_user_message:
-//                AlertDialog.Builder emailBuilder = new AlertDialog.Builder(UserMessageActivity.this);
-//                emailBuilder.setView(dialogView);
-//                emailBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
-//                    public void onClick(DialogInterface dialog,int id){
-//                        String text = dialogEditText.getText().toString().trim();
-//                        email.setText(text);
-//                        dialogTextView.setText("邮箱");
-//                        dialog.dismiss();
-//                    }
-//                });
-//                emailBuilder .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                });
-//                AlertDialog dialogEmail = emailBuilder.create();
-//                dialogEmail.show();
+            case R.id.information_relative_user_email:
+                Toast.makeText(this, "暂不支持邮箱的修改", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.school_user_message:
-//                AlertDialog.Builder schoolBuilder = new AlertDialog.Builder(UserMessageActivity.this);
-//                schoolBuilder.setView(dialogView);
-//                schoolBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
-//                    public void onClick(DialogInterface dialog,int id){
-//                        String text = dialogEditText.getText().toString().trim();
-//                        school.setText(text);
-//                        dialogTextView.setText("学校");
-//                        dialog.dismiss();
-//                    }
-//                });
-//                schoolBuilder .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                });
-//                AlertDialog dialogSchool = schoolBuilder.create();
-//                dialogSchool.show();
-                break;
-            case R.id.number_user_message:
-                break;
-            case R.id.personalized_signature_user_message:
-                AlertDialog.Builder personalizedBuilder = new AlertDialog.Builder(UserMessageActivity.this);
-                personalizedBuilder.setView(dialogView);
-                personalizedBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
+            case R.id.information_relative_user_school:
+                AlertDialog.Builder schoolBuilder = new AlertDialog.Builder(UserMessageActivity.this);
+                schoolBuilder.setView(dialogView);
+                dialogTextView.setText("学校");
+                schoolBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog,int id){
-                        String text = dialogEditText.getText().toString().trim();
-                        personalizedSignature.setText(text);
-                        dialogTextView.setText("个性签名");
+                        getDialogSchool = dialogEditText.getText().toString().trim();
+                        if (!getDialogSchool.equals("")) {
+                            changeSchool(getDialogSchool);
+                        }
                         dialog.dismiss();
                     }
                 });
-                personalizedBuilder .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                schoolBuilder .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
-                AlertDialog dialogPersonal = personalizedBuilder.create();
-                dialogPersonal.show();
+                AlertDialog dialogSchool = schoolBuilder.create();
+                dialogSchool.show();
                 break;
-            case R.id.make_onecel_user_message:
-                AlertDialog.Builder makeOnecleBuilder = new AlertDialog.Builder(UserMessageActivity.this);
-                makeOnecleBuilder.setView(dialogView);
-                makeOnecleBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
+            case R.id.information_relative_user_introduce:
+                AlertDialog.Builder introduceBuilder = new AlertDialog.Builder(UserMessageActivity.this);
+                introduceBuilder.setView(dialogView);
+                dialogTextView.setText("个人简介");
+                introduceBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog,int id){
-                        String text = dialogEditText.getText().toString().trim();
-                        makeOnecel.setText(text);
-                        dialogTextView.setText("简介");
+                        getDialogResume = dialogEditText.getText().toString().trim();
+                        if (!getDialogResume.equals("")) {
+                            changeIntroduce(getDialogResume);
+                        }
                         dialog.dismiss();
                     }
                 });
-                makeOnecleBuilder .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                introduceBuilder .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
-                AlertDialog dialogMakeOnecel = makeOnecleBuilder.create();
-                dialogMakeOnecel.show();
-                break;
-            default:
+                AlertDialog dialogIntroduce = introduceBuilder.create();
+                dialogIntroduce.show();
                 break;
         }
     }
-    public void popupChose(){
-        final String[] items = new String[]{"从本地选择","拍照"};
+
+    private void changeIntroduce(String getDialogResume) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = "";
+                String request = "userId=" + userId + "&resume=" + getDialogResume;
+                resultSchool = netUtil.upInfo(url,"",request,"utf-8");
+                msg.what = 2;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    private void changeSchool(String getDialogSchool) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = "";
+                String request = "userId=" + userId + "&school=" + getDialogSchool;
+                resultSchool = netUtil.upInfo(url,"",request,"utf-8");
+                msg.what = 1;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    private void changeUserName(String text) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = "";
+                String request = "userId=" + userId + "&userName=" + text;
+                resultName = netUtil.upInfo(url,"",request,"utf-8");
+                msg.what = 0;
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    public void popupChose() {
+        final String[] items = new String[]{"从本地选择", "拍照"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Log.e("=======================",PERMISSIONS.toString() );
-        Log.e("--------------",mPermissionsChecker.toString());
+        Log.e("=======================", PERMISSIONS.toString());
+        Log.e("--------------", mPermissionsChecker.toString());
         builder.setTitle("选择照片").setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case 0:
 
                         //检查权限(6.0以上做权限判断)
@@ -346,7 +344,7 @@ public class UserMessageActivity extends Activity implements View.OnClickListene
                     } else {
                         bitmap = BitmapFactory.decodeFile(TakePhoto.imagePath);
                     }
-                    userMesaageHeader.setImageBitmap(bitmap);
+                    information_user_headimage.setImageBitmap(bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -364,4 +362,9 @@ public class UserMessageActivity extends Activity implements View.OnClickListene
                 break;
         }
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
+

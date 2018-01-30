@@ -11,16 +11,30 @@ import java.util.List;
  */
 public class ParkUser implements Serializable {
     private static final long serialVersionUID = -4188697887466612154L;
-    private Integer id;
+    private Integer userId;
     private String userName;
     private String email;
     private String password;
     private String school;
-    private String imgPath;
-    private String individualResume;
+    private String imgPath;//`头像地址
+    private String individualResume;//个人简历
 
     private List<ParkLog> logs = new ArrayList<>();
 
+
+    public ParkUser(Integer userId, String userName, String email, String password, String school, String imgPath, String individualResume, List<ParkLog> logs) {
+        this.userId = userId;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.school = school;
+        this.imgPath = imgPath;
+        this.individualResume = individualResume;
+        this.logs = logs;
+    }
+
+    public ParkUser() {
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -29,21 +43,25 @@ public class ParkUser implements Serializable {
 
         ParkUser parkUser = (ParkUser) o;
 
-        if (id != null ? !id.equals(parkUser.id) : parkUser.id != null) return false;
-        if (userName != null ? !userName.equals(parkUser.userName) : parkUser.userName != null) return false;
+        if (userId != null ? !userId.equals(parkUser.userId) : parkUser.userId != null)
+            return false;
+        if (userName != null ? !userName.equals(parkUser.userName) : parkUser.userName != null)
+            return false;
         if (email != null ? !email.equals(parkUser.email) : parkUser.email != null) return false;
-        if (password != null ? !password.equals(parkUser.password) : parkUser.password != null) return false;
-        if (school != null ? !school.equals(parkUser.school) : parkUser.school != null) return false;
-        if (imgPath != null ? !imgPath.equals(parkUser.imgPath) : parkUser.imgPath != null) return false;
+        if (password != null ? !password.equals(parkUser.password) : parkUser.password != null)
+            return false;
+        if (school != null ? !school.equals(parkUser.school) : parkUser.school != null)
+            return false;
+        if (imgPath != null ? !imgPath.equals(parkUser.imgPath) : parkUser.imgPath != null)
+            return false;
         if (individualResume != null ? !individualResume.equals(parkUser.individualResume) : parkUser.individualResume != null)
             return false;
         return logs != null ? logs.equals(parkUser.logs) : parkUser.logs == null;
-
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
@@ -54,26 +72,16 @@ public class ParkUser implements Serializable {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "ParkUser{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", school='" + school + '\'' +
-                ", imgPath='" + imgPath + '\'' +
-                ", individualResume='" + individualResume + '\'' +
-                ", logs=" + logs +
-                '}';
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -130,18 +138,5 @@ public class ParkUser implements Serializable {
 
     public void setLogs(List<ParkLog> logs) {
         this.logs = logs;
-    }
-
-    public ParkUser() {
-    }
-
-    public ParkUser(Integer id, String userName, String email, String password, String school, String imgPath, String individualResume) {
-        this.id = id;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.school = school;
-        this.imgPath = imgPath;
-        this.individualResume = individualResume;
     }
 }
