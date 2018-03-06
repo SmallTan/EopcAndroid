@@ -156,6 +156,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(getApplicationContext(), "我", Toast.LENGTH_SHORT).show();
         }else if (id == R.id.item_feedback){
             Intent feedbackIntent = new Intent(MapActivity.this,FeedBackActivity.class);
+            startActivity(feedbackIntent);
+            finish();
         }else if (id == R.id.item_notice){
             Intent noticeIntent = new Intent(MapActivity.this,NoticeActivity.class);
             startActivity(noticeIntent);
