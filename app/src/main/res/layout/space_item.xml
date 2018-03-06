@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/space_item_user_head_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/space_item_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="杰伦"
+            android:textColor="@android:color/holo_blue_dark" />
+
+        <TextView
+            android:id="@+id/space_item_content_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="翻着我们的照片，想念若隐若现，去年的冬天，我们笑得很甜......\n—— 哎哟，不错哦!" />
+
+        <app.ifox.com.eopcandroid.customView.NineGridTestLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/layout_nine_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:sapcing="4dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/space_item_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginTop="8dp"
+                android:text="10分钟前" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/space_like"
+                android:layout_gravity="center_vertical"
+                >
+                <ImageView
+                    android:id="@+id/space_like_image"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/like_gray"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="赞"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/space_like_image"
+                    android:id="@+id/space_like_num"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical"
+                >
+                <ImageView
+                    android:id="@+id/space_comment_image"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@mipmap/icon_comment"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="评论"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/space_comment_image"
+                    android:id="@+id/space_comment_num"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="center_vertical"
+                >
+                <ImageView
+                    android:id="@+id/space_forword_image"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_forword"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="转发"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/space_forword_image"
+                    android:id="@+id/space_forword_num"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

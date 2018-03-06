@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean validatePassword(String password){
         return password.length() > 6;
     }
-
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
@@ -108,13 +107,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.login);
         init();
     }
-
     private void init() {
         tlEmail = (TextInputLayout) findViewById(R.id.tl_login_mail);
         tlPassword = (TextInputLayout) findViewById(R.id.tl_login_password);
         etEmail = (EditText) findViewById(R.id.et_login_mail);
         etPassword = (EditText) findViewById(R.id.et_login_password);
-//        btClose = (Button) findViewById(R.id.close_login);
         btFindPassword = (Button) findViewById(R.id.find_password);
         btRegister = (Button) findViewById(R.id.intent_register);
         btLogin = (Button) findViewById(R.id.bt_login);
@@ -122,7 +119,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btLogin.setOnClickListener(this);
         btRegister.setOnClickListener(this);
         btFindPassword.setOnClickListener(this);
-//        btClose.setOnClickListener(this);
         prePassword = getSharedPreferences("remeberAccount",MODE_PRIVATE);
         preEditor = prePassword.edit();
         setRemeberPassword();
@@ -132,15 +128,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (isRemeber) {
             String account = prePassword.getString("account","");
             String password = prePassword.getString("password","");
-            etEmail.setText(account);
-            etPassword.setText(password);
-            checkRemeber.setChecked(true);
-            Intent intentMainActivity = new Intent(LoginActivity.this, MapActivity.class);
-            startActivity(intentMainActivity);
-            finish();
+            if (!account.equals("") || !password.equals("")) {
+                etEmail.setText(account);
+                etPassword.setText(password);
+                checkRemeber.setChecked(true);
+                Intent intentMainActivity = new Intent(LoginActivity.this, MapActivity.class);
+                startActivity(intentMainActivity);
+                finish();
+            }
         }
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -148,7 +145,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                // Toast.makeText(LoginActivity.this,"点击登录",Toast.LENGTH_SHORT).show();
                 inputEmail = tlEmail.getEditText().getText().toString();
                 inputPassword = tlPassword.getEditText().getText().toString();
-                savePassword();
                 login();
                 break;
             case R.id.intent_register:
@@ -159,16 +155,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-
-    private void savePassword() {
-
-    }
-
     public void login() {
 
         verifyEmail();
     }
-
     public void verifyEmail() {
         if (!validateEmail(inputEmail)){
             Toast.makeText(LoginActivity.this,"请输入正确的邮箱地址",Toast.LENGTH_SHORT).show();

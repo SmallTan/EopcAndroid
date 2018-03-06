@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/feedback_back"
+        android:background="@color/white"
+        >
+        <Button
+            android:id="@+id/feedback_back_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/single_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:id="@+id/feedback_back_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="反馈"
+            android:textColor="#2c2c2c"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:id="@+id/feedback_edit"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hint="说点什么吧"
+            android:maxHeight="200dp"
+            android:textColor="@color/text_black"
+            android:layout_marginTop="15dp"
+            />
+        <Button
+            android:id="@+id/feedback_send"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="提交"
+            android:textSize="20sp"
+            android:background="#32a8ed"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+</LinearLayout>

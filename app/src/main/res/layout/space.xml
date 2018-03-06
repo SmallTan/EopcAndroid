@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/space_back"
+        android:background="@color/white"
+        >
+        <Button
+            android:id="@+id/space_back_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/single_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:id="@+id/space_back_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="空间"
+            android:textColor="#2c2c2c"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            />
+    </RelativeLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/post_refreshLayout"
+        >
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scrollbars="vertical"-->
+            <!--android:fadingEdge="vertical">-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent">-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/post_rcycle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <!--</RelativeLayout>-->
+
+            <!--</LinearLayout>-->
+
+
+        <!--</ScrollView>-->
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/post_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:src="@mipmap/icon_post_add"
+        android:backgroundTint="@color/title_bg"
+        />
+</LinearLayout>

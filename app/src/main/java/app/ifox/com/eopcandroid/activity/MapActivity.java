@@ -115,6 +115,10 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 startActivityForResult(mapIntentToCapActivity, REQUEST_CODE);
                 break;
             case R.id.go_space:
+                Intent spaceIntent = new Intent(MapActivity.this,SpaceActivity.class);
+                startActivity(spaceIntent);
+                finish();
+
                 Toast.makeText(MapActivity.this,"空间",Toast.LENGTH_SHORT).show();
                 break;
 
@@ -129,8 +133,6 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         int id = item.getItemId();
         if (id == R.id.item_user) {
             Toast.makeText(getApplicationContext(), "我", Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.item_friends){
-
         }else if (id == R.id.item_feedback){
 
         }else if (id == R.id.item_notice){
@@ -152,14 +154,16 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
             finish();
             Toast.makeText(getApplicationContext(), "我", Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.item_friends){
-
         }else if (id == R.id.item_feedback){
-
+            Intent feedbackIntent = new Intent(MapActivity.this,FeedBackActivity.class);
         }else if (id == R.id.item_notice){
-
+            Intent noticeIntent = new Intent(MapActivity.this,NoticeActivity.class);
+            startActivity(noticeIntent);
+            finish();
         }else if (id == R.id.item_setup){
-
+            Intent setupIntent = new Intent(MapActivity.this,SetUpActivity.class);
+            startActivity(setupIntent);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.map_drawerlayout);
 

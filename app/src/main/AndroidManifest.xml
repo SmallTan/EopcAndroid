@@ -36,18 +36,21 @@
             android:value="eeaa2430db99a3fa50b0cbaf66527811"
             />
         <service android:name="com.amap.api.location.APSService"/>
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MapActivity"/>
+        <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.UserMessageActivity"/>
         <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".util.PermissionsActivity"/>
         <activity android:name=".activity.ChatRoomActivity"/>
+        <activity android:name=".activity.NoticeActivity"/>
+        <activity android:name=".activity.SetUpActivity"/>
+        <activity android:name=".activity.SpaceActivity"/>
     </application>
 
 </manifest>

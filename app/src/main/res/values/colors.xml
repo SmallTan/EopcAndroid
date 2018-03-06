@@ -6,4 +6,7 @@
     <color name="backeground_grey">#c0c0c0</color>
     <color name="send_verification">#FF6E00</color>
     <color name="white">#ffffff</color>
+    <color name="text_black">#121212</color>
+    <color name="title_bg">#118cd9</color>
+    <color name="view_view">#bebebe</color>
 </resources>
