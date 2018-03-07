@@ -181,6 +181,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Intent JumpIntent = new Intent(MapActivity.this,ZxingJumpActivity.class);
+                    JumpIntent.putExtra("url",result);
+                    startActivity(JumpIntent);
                     Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     Toast.makeText(MapActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();

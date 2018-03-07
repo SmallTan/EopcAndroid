@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -132,4 +133,6 @@ public class ChatRoomActivity extends AppCompatActivity implements OnClickListen
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
 }
