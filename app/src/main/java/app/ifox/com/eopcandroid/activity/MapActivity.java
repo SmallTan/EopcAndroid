@@ -1,6 +1,8 @@
 package app.ifox.com.eopcandroid.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.LatLng;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -32,7 +36,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private MapView mMapView;
     AMap aMap;
     MapUtil mapUtil;
-
+    Bitmap decodeResource;
     private Button chatRoom;
     private Button mScannr;
     private Button mSpace;
@@ -73,9 +77,14 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         mDrawerLayout = (DrawerLayout) findViewById(R.id.map_drawerlayout);
         mNavigation = (NavigationView) findViewById(R.id.nv_user);
         mMapView = (MapView) findViewById(R.id.map_view);
+        decodeResource = BitmapFactory.decodeResource(getResources(),R.drawable.location_icon);
         aMap = mMapView.getMap();
         mapUtil = new MapUtil(mMapView,MapActivity.this,savedInstanceState);
-
+        mapUtil.addMarkerToMap(new LatLng(30.564458,104.200396),"龙湖","试点",decodeResource);
+//        mapUtil.addMarkerToMap(new LatLng(104.207226,30.569117),"北京","试点",decodeResource);
+//        mapUtil.addMarkerToMap(new LatLng(104.205047,30.570341),"北京","试点",decodeResource);
+//        mapUtil.addMarkerToMap(new LatLng(104.203826,30.569471),"北京","试点",decodeResource);
+//        mapUtil.addMarkerToMap(new LatLng(104.207778,30.571562),"北京","试点",decodeResource);
         chatRoom = (Button) findViewById(R.id.chat_room);
         mScannr = (Button) findViewById(R.id.scan_qr_code);
         mSpace = (Button) findViewById(R.id.go_space);

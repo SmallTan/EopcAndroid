@@ -1,6 +1,9 @@
 package app.ifox.com.eopcandroid.util;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +27,8 @@ import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.MyLocationStyle;
 
 import java.util.Date;
+
+import app.ifox.com.eopcandroid.R;
 
 
 /**
@@ -140,11 +145,11 @@ public class MapUtil implements LocationSource, AMapLocationListener {
         mListener = null;
     }
 
-    public void addMarkerToMap(LatLng latLng, String title, String snippet, int icon_id) {
+    public void addMarkerToMap(LatLng latLng, String title, String snippet, Bitmap decodeResource) {
         MarkerOptions markerOption = new MarkerOptions();
         markerOption.position(latLng);
-        markerOption.draggable(false);
-        markerOption.icon(BitmapDescriptorFactory.fromResource(icon_id));
+        markerOption.draggable(true);
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(decodeResource));
 
         markerOption.title(title).snippet(snippet);
         Marker marker = aMap.addMarker(markerOption);
